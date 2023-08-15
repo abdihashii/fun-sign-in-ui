@@ -6,30 +6,21 @@ import AppleBlackIcon from '../icons/appleBlackIcon';
 import useAuth from '../hooks/useAuth';
 
 export default function SignUpPage() {
-  const { loginForm, handleInputChange } = useAuth();
+  const { loginForm, handleInputChange, handleSignIn } = useAuth();
 
   return (
     <main className="w-96 mx-auto mt-20 flex flex-col justify-center gap-16">
       <h1 className="text-center text-5xl text-black font-medium">
-        Create Account
+        Welcome back!
       </h1>
 
-      <form className="flex flex-col gap-6">
-        <div className="flex flex-col gap-4">
-          <p className="font-medium text-black text-sm">
-            Let's get started with your 30 days trial
-          </p>
-          <input
-            className="h-14 py-3 px-5 rounded-xl border border-gray-500"
-            type="text"
-            placeholder="Name"
-            name="name"
-            value={loginForm?.name}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSignIn();
+        }}
+      >
         <input
           className="h-14 py-3 px-5 rounded-xl border border-gray-500"
           type="email"
@@ -39,28 +30,34 @@ export default function SignUpPage() {
           onChange={handleInputChange}
           required
         />
-        <input
-          className="h-14 py-3 px-5 rounded-xl border border-gray-500"
-          type="password"
-          placeholder="Password"
-          name="password"
-          value={loginForm?.password}
-          onChange={handleInputChange}
-          required
-        />
+
+        <div className="flex flex-col gap-4">
+          <input
+            className="h-14 py-3 px-5 rounded-xl border border-gray-500"
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={loginForm?.password}
+            onChange={handleInputChange}
+            required
+          />
+          <p className="text-right underline font-medium text-sm">
+            Forgot password?
+          </p>
+        </div>
 
         <div className="flex flex-col gap-4">
           <button
             className="h-14 border border-black p-3 font-medium rounded-xl bg-black text-white text-base"
             type="submit"
           >
-            Create account
+            Sign in
           </button>
 
           <p className="text-gray-500 font-medium text-sm">
-            Already have an account? {` `}
-            <Link className="text-black underline" href="/sign-in">
-              Login
+            Don't have an account? {` `}
+            <Link className="underline text-black" href="/sign-up">
+              Sign up
             </Link>
           </p>
         </div>
