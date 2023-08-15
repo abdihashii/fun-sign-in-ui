@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAtom } from 'jotai';
 import { loginFormAtom, loadingStateAtom, userSessionAtom } from '../atoms';
 import supabase from '../utils/supabaseClient';
 import { useRouter } from 'next/navigation';
-import { UserSession } from '../types';
 
 const useAuth = () => {
   const [loginForm, setLoginForm] = useAtom(loginFormAtom);
@@ -76,31 +75,9 @@ const useAuth = () => {
     setLoginForm(newLoginForm);
   };
 
-  // Check for an active session when the app mounts
-  useEffect(() => {
-    async function getUserSession() {
-      const { data, error } = await supabase.auth.getSession();
-      const newSession = data?.session ?? null;
-      const newUser = newSession?.user ?? null;
-
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-      const newUserSession = {
-        user: newUser,
-        session: newSession,
-      };
-
-      setUserSession(newUserSession);
-    }
-
-    getUserSession();
-  }, []);
-
   return {
     userSession,
+    setUserSession,
     loadingState,
     loginForm,
     handleFormSubmit,

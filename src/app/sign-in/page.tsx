@@ -7,8 +7,13 @@ import LoadingSpinner from '../icons/loadingSpinner';
 import useAuth from '../hooks/useAuth';
 
 export default function SignUpPage() {
-  const { loadingState, loginForm, handleInputChange, handleFormSubmit } =
-    useAuth();
+  const {
+    userSession,
+    loadingState,
+    loginForm,
+    handleInputChange,
+    handleFormSubmit,
+  } = useAuth();
 
   return (
     <main className="w-96 mx-auto mt-20 flex flex-col justify-center gap-16">
