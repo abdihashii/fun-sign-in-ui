@@ -86,7 +86,7 @@ const useAuth = () => {
     if (userSession === null) return;
 
     getUserSession();
-  }, [userSession]);
+  }, [userSession, setUserSession]);
 
   return {
     userSession,
