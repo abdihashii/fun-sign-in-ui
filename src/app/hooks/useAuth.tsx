@@ -4,9 +4,11 @@ import React from 'react';
 import { useAtom } from 'jotai';
 import { loginFormAtom } from '../atoms';
 import supabase from '../utils/supabaseClient';
+import { useRouter } from 'next/navigation';
 
 const useAuth = () => {
   const [loginForm, setLoginForm] = useAtom(loginFormAtom);
+  const router = useRouter();
 
   const handleSignUp = (e: Event) => {
     e.preventDefault();
@@ -29,6 +31,8 @@ const useAuth = () => {
       email: '',
       password: '',
     });
+
+    router.push('/protected');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
