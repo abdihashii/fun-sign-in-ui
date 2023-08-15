@@ -1,15 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { loginFormAtom, loadingStateAtom } from '../atoms';
+import { loginFormAtom, loadingStateAtom, userSessionAtom } from '../atoms';
 import supabase from '../utils/supabaseClient';
 import { useRouter } from 'next/navigation';
+import { UserSession } from '../types';
 
 const useAuth = () => {
   const [loginForm, setLoginForm] = useAtom(loginFormAtom);
   const router = useRouter();
   const [loadingState, setLoadingState] = useAtom(loadingStateAtom);
+  const [userSession, setUserSession] = useAtom(userSessionAtom);
 
   const handleSignUp = (e: Event) => {
     e.preventDefault();
@@ -38,6 +40,8 @@ const useAuth = () => {
 
     console.log(data);
 
+    setUserSession(data);
+
     setLoginForm({
       email: '',
       password: '',
@@ -59,7 +63,47 @@ const useAuth = () => {
     setLoginForm(newLoginForm);
   };
 
+  useEffect(() => {
+    async function getUserSession() {
+      console.log(loadingState);
+      setLoadingState({
+        ...loadingState,
+        isLoading: true,
+      });
+
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+
+      if (error || !session) {
+        console.error(error);
+        setLoadingState({
+          isLoading: false,
+          error: error?.message || 'No session',
+        });
+
+        return;
+      }
+
+      const newUserSession = {
+        ...userSession,
+        session,
+      };
+
+      setUserSession(newUserSession as UserSession);
+
+      setLoadingState({
+        isLoading: false,
+        error: '',
+      });
+    }
+
+    getUserSession();
+  }, []);
+
   return {
+    userSession,
     loadingState,
     loginForm,
     handleSignIn,

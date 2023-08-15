@@ -1,3 +1,5 @@
+import { Session, User } from '@supabase/supabase-js';
+
 export type LoginForm = {
   name?: string;
   email: string;
@@ -7,4 +9,9 @@ export type LoginForm = {
 export type LoadingState = {
   isLoading: boolean;
   error: string;
+};
+
+export type UserSession = {
+  user: User | null;
+  session: Session | null;
 };
