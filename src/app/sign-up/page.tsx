@@ -6,7 +6,8 @@ import AppleBlackIcon from '../icons/appleBlackIcon';
 import useAuth from '../hooks/useAuth';
 
 export default function SignUpPage() {
-  const { loginForm, handleInputChange, handleSignUp, userSession } = useAuth();
+  const { loginForm, handleInputChange, handleFormSubmit, userSession } =
+    useAuth();
 
   return (
     <main className="w-96 mx-auto mt-20 flex flex-col justify-center gap-16">
@@ -18,7 +19,7 @@ export default function SignUpPage() {
         className="flex flex-col gap-6"
         onSubmit={(event) => {
           event.preventDefault();
-          handleSignUp();
+          handleFormSubmit('sign-up');
         }}
       >
         <div className="flex flex-col gap-4">

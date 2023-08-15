@@ -7,7 +7,7 @@ import LoadingSpinner from '../icons/loadingSpinner';
 import useAuth from '../hooks/useAuth';
 
 export default function SignUpPage() {
-  const { loadingState, loginForm, handleInputChange, handleSignIn } =
+  const { loadingState, loginForm, handleInputChange, handleFormSubmit } =
     useAuth();
 
   return (
@@ -20,7 +20,7 @@ export default function SignUpPage() {
         className="flex flex-col gap-6"
         onSubmit={(e) => {
           e.preventDefault();
-          handleSignIn();
+          handleFormSubmit('sign-in');
         }}
       >
         <input

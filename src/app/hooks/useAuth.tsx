@@ -13,50 +13,35 @@ const useAuth = () => {
   const [loadingState, setLoadingState] = useAtom(loadingStateAtom);
   const [userSession, setUserSession] = useAtom(userSessionAtom);
 
-  const handleSignUp = async () => {
+  const handleFormSubmit = async (type: string) => {
     setLoadingState({
       ...loadingState,
       isLoading: true,
     });
 
-    const { data, error } = await supabase.auth.signUp({
-      email: loginForm.email,
-      password: loginForm.password,
-    });
+    let data,
+      error = null;
 
-    if (error) {
-      console.error(error);
-      setLoadingState({
-        isLoading: false,
-        error: error.message,
+    if (type === 'sign-up') {
+      const response = await supabase.auth.signUp({
+        email: loginForm.email,
+        password: loginForm.password,
       });
 
+      data = response.data;
+      error = response.error;
+    } else if (type === 'sign-in') {
+      const response = await supabase.auth.signInWithPassword({
+        email: loginForm.email,
+        password: loginForm.password,
+      });
+
+      data = response.data;
+      error = response.error;
+    } else {
+      console.error('Invalid form type');
       return;
     }
-
-    setUserSession(data);
-
-    setLoginForm({
-      email: '',
-      password: '',
-    });
-
-    setLoadingState({
-      isLoading: false,
-      error: '',
-    });
-  };
-
-  const handleSignIn = async () => {
-    setLoadingState({
-      ...loadingState,
-      isLoading: true,
-    });
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: loginForm.email,
-      password: loginForm.password,
-    });
 
     if (error) {
       console.error(error);
@@ -118,8 +103,7 @@ const useAuth = () => {
     userSession,
     loadingState,
     loginForm,
-    handleSignIn,
-    handleSignUp,
+    handleFormSubmit,
     handleInputChange,
   };
 };
