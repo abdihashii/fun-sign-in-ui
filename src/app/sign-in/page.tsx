@@ -55,7 +55,7 @@ export default function SignUpPage() {
           </button>
 
           <p className="text-gray-500 font-medium text-sm">
-            Don't have an account? {` `}
+            Don&apos;t have an account? {` `}
             <Link
               className="hover:text-gray-500 underline text-black"
               href="/sign-up"

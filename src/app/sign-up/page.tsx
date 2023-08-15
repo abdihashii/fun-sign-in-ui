@@ -17,7 +17,7 @@ export default function SignUpPage() {
       <form className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
           <p className="font-medium text-black text-sm">
-            Let's get started with your 30 days trial
+            Let&apos;s get started with your 30 days trial
           </p>
           <input
             className="h-14 py-3 px-5 rounded-xl border border-gray-500"
