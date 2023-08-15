@@ -38,8 +38,6 @@ const useAuth = () => {
       return;
     }
 
-    console.log(data);
-
     setUserSession(data);
 
     setLoginForm({
