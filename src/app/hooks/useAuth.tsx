@@ -65,12 +65,6 @@ const useAuth = () => {
 
   useEffect(() => {
     async function getUserSession() {
-      console.log(loadingState);
-      setLoadingState({
-        ...loadingState,
-        isLoading: true,
-      });
-
       const {
         data: { session },
         error,
@@ -78,11 +72,6 @@ const useAuth = () => {
 
       if (error || !session) {
         console.error(error);
-        setLoadingState({
-          isLoading: false,
-          error: error?.message || 'No session',
-        });
-
         return;
       }
 
@@ -92,15 +81,12 @@ const useAuth = () => {
       };
 
       setUserSession(newUserSession as UserSession);
-
-      setLoadingState({
-        isLoading: false,
-        error: '',
-      });
     }
 
+    if (userSession === null) return;
+
     getUserSession();
-  }, []);
+  }, [userSession]);
 
   return {
     userSession,
