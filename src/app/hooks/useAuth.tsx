@@ -75,6 +75,18 @@ const useAuth = () => {
     setLoginForm(newLoginForm);
   };
 
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setUserSession(null);
+    router.push('/sign-in');
+  };
+
   return {
     userSession,
     setUserSession,
@@ -82,6 +94,7 @@ const useAuth = () => {
     loginForm,
     handleFormSubmit,
     handleInputChange,
+    handleSignOut,
   };
 };
 
