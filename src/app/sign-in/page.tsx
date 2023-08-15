@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import GoogleColorIcon from '../icons/googleColorIcon';
 import AppleBlackIcon from '../icons/appleBlackIcon';
+import LoadingSpinner from '../icons/loadingSpinner';
 import useAuth from '../hooks/useAuth';
 
 export default function SignUpPage() {
-  const { loginForm, handleInputChange, handleSignIn } = useAuth();
+  const { loadingState, loginForm, handleInputChange, handleSignIn } =
+    useAuth();
 
   return (
     <main className="w-96 mx-auto mt-20 flex flex-col justify-center gap-16">
@@ -51,8 +53,14 @@ export default function SignUpPage() {
             className="h-14 border border-black p-3 font-medium rounded-xl bg-black text-white text-base"
             type="submit"
           >
-            Sign in
+            {loadingState.isLoading ? <LoadingSpinner /> : `Sign in`}
           </button>
+
+          {loadingState.error && (
+            <p className="text-red-500 font-medium text-sm">
+              Failed to sign in, please try again.
+            </p>
+          )}
 
           <p className="text-gray-500 font-medium text-sm">
             Don&apos;t have an account? {` `}

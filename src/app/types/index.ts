@@ -3,3 +3,8 @@ export type LoginForm = {
   email: string;
   password: string;
 };
+
+export type LoadingState = {
+  isLoading: boolean;
+  error: string;
+};

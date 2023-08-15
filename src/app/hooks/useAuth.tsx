@@ -2,19 +2,25 @@
 
 import React from 'react';
 import { useAtom } from 'jotai';
-import { loginFormAtom } from '../atoms';
+import { loginFormAtom, loadingStateAtom } from '../atoms';
 import supabase from '../utils/supabaseClient';
 import { useRouter } from 'next/navigation';
 
 const useAuth = () => {
   const [loginForm, setLoginForm] = useAtom(loginFormAtom);
   const router = useRouter();
+  const [loadingState, setLoadingState] = useAtom(loadingStateAtom);
 
   const handleSignUp = (e: Event) => {
     e.preventDefault();
   };
 
   const handleSignIn = async () => {
+    setLoadingState({
+      ...loadingState,
+      isLoading: true,
+    });
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email: loginForm.email,
       password: loginForm.password,
@@ -22,6 +28,11 @@ const useAuth = () => {
 
     if (error) {
       console.error(error);
+      setLoadingState({
+        isLoading: false,
+        error: error.message,
+      });
+
       return;
     }
 
@@ -30,6 +41,11 @@ const useAuth = () => {
     setLoginForm({
       email: '',
       password: '',
+    });
+
+    setLoadingState({
+      isLoading: false,
+      error: '',
     });
 
     router.push('/protected');
@@ -43,7 +59,13 @@ const useAuth = () => {
     setLoginForm(newLoginForm);
   };
 
-  return { loginForm, handleSignIn, handleSignUp, handleInputChange };
+  return {
+    loadingState,
+    loginForm,
+    handleSignIn,
+    handleSignUp,
+    handleInputChange,
+  };
 };
 
 export default useAuth;
