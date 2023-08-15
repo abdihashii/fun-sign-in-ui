@@ -8,7 +8,7 @@ export default function ProtectedPage() {
 
   return (
     <div>
-      {userSession ? (
+      {userSession?.session ? (
         <h1>Protected Page</h1>
       ) : (
         <>

@@ -58,7 +58,7 @@ export default function SignUpPage() {
 
           {loadingState.error && (
             <p className="text-red-500 font-medium text-sm">
-              Failed to sign in, please try again.
+              Failed to sign in: {loadingState.error}. Please try again.
             </p>
           )}
 
