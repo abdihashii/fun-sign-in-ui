@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import Link from 'next/link';
 import useAuth from '../hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import supabase from '../utils/supabaseClient';
@@ -33,7 +32,7 @@ export default function ProtectedPage() {
     if (!userSession) {
       getUserSession();
     }
-  }, [userSession, router]);
+  }, [userSession, getUserSession]);
 
   return (
     <div>
