@@ -69,16 +69,9 @@ export default function SignUpPage() {
           Sign up with Apple
         </button>
         <button className="h-14 p-3 gap-2 justify-center items-center flex flex-row border border-black py-3 bg-white text-black rounded-xl text-base">
-          {/* <AiOutlineGoogle className="text-2xl" /> */}
           <GoogleColorIcon />
           Sign up with Google
         </button>
-      </div>
-
-      <div>
-        <pre>
-          <code>{JSON.stringify(loginForm, null, 2)}</code>
-        </pre>
       </div>
     </main>
   );

@@ -29,8 +29,6 @@ const useAuth = () => {
       email: '',
       password: '',
     });
-
-    // We make sure to reset the signInValues after signing in to prevent the user from being able to sign in again with the same values
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
