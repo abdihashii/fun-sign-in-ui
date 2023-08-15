@@ -56,7 +56,10 @@ export default function SignUpPage() {
 
           <p className="text-gray-500 font-medium text-sm">
             Don't have an account? {` `}
-            <Link className="underline text-black" href="/sign-up">
+            <Link
+              className="hover:text-gray-500 underline text-black"
+              href="/sign-up"
+            >
               Sign up
             </Link>
           </p>
@@ -66,11 +69,11 @@ export default function SignUpPage() {
       <div className="flex flex-col gap-6">
         <button className="h-14 p-3 gap-2 justify-center items-center flex flex-row py-3 bg-black text-white rounded-xl text-base border border-black">
           <AppleBlackIcon />
-          Sign up with Apple
+          Sign in with Apple
         </button>
-        <button className="h-14 p-3 gap-2 justify-center items-center flex flex-row border border-black py-3 bg-white text-black rounded-xl text-base">
+        <button className="hover:border-2 h-14 p-3 gap-2 justify-center items-center flex flex-row border border-gray-500 py-3 bg-white text-black rounded-xl text-base">
           <GoogleColorIcon />
-          Sign up with Google
+          Sign in with Google
         </button>
       </div>
     </main>
