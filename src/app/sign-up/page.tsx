@@ -6,7 +6,7 @@ import AppleBlackIcon from '../icons/appleBlackIcon';
 import useAuth from '../hooks/useAuth';
 
 export default function SignUpPage() {
-  const { loginForm, handleInputChange } = useAuth();
+  const { loginForm, handleInputChange, handleSignUp, userSession } = useAuth();
 
   return (
     <main className="w-96 mx-auto mt-20 flex flex-col justify-center gap-16">
@@ -14,7 +14,13 @@ export default function SignUpPage() {
         Create Account
       </h1>
 
-      <form className="flex flex-col gap-6">
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleSignUp();
+        }}
+      >
         <div className="flex flex-col gap-4">
           <p className="font-medium text-black text-sm">
             Let&apos;s get started with your 30 days trial
@@ -79,6 +85,10 @@ export default function SignUpPage() {
           Sign up with Google
         </button>
       </div>
+
+      <pre>
+        <code>{JSON.stringify(userSession, null, 2)}</code>
+      </pre>
     </main>
   );
 }

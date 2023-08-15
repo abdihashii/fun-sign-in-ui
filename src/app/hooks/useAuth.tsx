@@ -13,8 +13,38 @@ const useAuth = () => {
   const [loadingState, setLoadingState] = useAtom(loadingStateAtom);
   const [userSession, setUserSession] = useAtom(userSessionAtom);
 
-  const handleSignUp = (e: Event) => {
-    e.preventDefault();
+  const handleSignUp = async () => {
+    setLoadingState({
+      ...loadingState,
+      isLoading: true,
+    });
+
+    const { data, error } = await supabase.auth.signUp({
+      email: loginForm.email,
+      password: loginForm.password,
+    });
+
+    if (error) {
+      console.error(error);
+      setLoadingState({
+        isLoading: false,
+        error: error.message,
+      });
+
+      return;
+    }
+
+    setUserSession(data);
+
+    setLoginForm({
+      email: '',
+      password: '',
+    });
+
+    setLoadingState({
+      isLoading: false,
+      error: '',
+    });
   };
 
   const handleSignIn = async () => {
@@ -61,30 +91,28 @@ const useAuth = () => {
     setLoginForm(newLoginForm);
   };
 
+  // Check for an active session when the app mounts
   useEffect(() => {
     async function getUserSession() {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession();
+      const { data, error } = await supabase.auth.getSession();
+      const newSession = data?.session ?? null;
+      const newUser = newSession?.user ?? null;
 
-      if (error || !session) {
+      if (error) {
         console.error(error);
         return;
       }
 
       const newUserSession = {
-        ...userSession,
-        session,
+        user: newUser,
+        session: newSession,
       };
 
-      setUserSession(newUserSession as UserSession);
+      setUserSession(newUserSession);
     }
 
-    if (userSession === null) return;
-
     getUserSession();
-  }, [userSession, setUserSession]);
+  }, []);
 
   return {
     userSession,
