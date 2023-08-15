@@ -74,7 +74,7 @@ export default function SignUpPage() {
           <AppleBlackIcon />
           Sign up with Apple
         </button>
-        <button className="h-14 p-3 gap-2 justify-center items-center flex flex-row border border-black py-3 bg-white text-black rounded-xl text-base">
+        <button className="hover:border-2 h-14 p-3 gap-2 justify-center items-center flex flex-row border border-gray-500 py-3 bg-white text-black rounded-xl text-base">
           <GoogleColorIcon />
           Sign up with Google
         </button>
